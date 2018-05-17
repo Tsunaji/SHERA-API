@@ -8,20 +8,25 @@
 
     <context:annotation-config />
     
-    <context:property-placeholder location="classpath:**/application.properties" />
+    <context:property-placeholder location="classpath:/application.properties" />
     
-    <ldap:context-source
+<!--    <ldap:context-source
         id="contextSource"
         url="ldap://10.61.10.27:387"
         base="dc=mahaphant, dc=com"
         username="cn=sheraadm, cn=Users, dc=mahaphant, dc=com"
+        password="mhp@root1" />-->
+        
+        <ldap:context-source
+        id="contextSource"
+        url="${spring.ldap.}"
+        base="dc=mahaphant, dc=com"
+        username="cn=sheraadm, cn=Users, dc=mahaphant, dc=com"
         password="mhp@root1" />
 
-    <ldap:ldap-template />
-    
-    <!--<ldap:ldap-template id="ldapTemplate"/>-->
+    <ldap:ldap-template id="ldapTemplate" />
 
-    <!--    <bean id="personRepo" class="com.shera.sheraapi.PersonRepoImpl">
+    <bean id="AuthenTestImp" class="com.shera.sheraapi.AuthenTest">
         <property name="ldapTemplate" ref="ldapTemplate" />
-    </bean>-->
+    </bean>
 </beans>
