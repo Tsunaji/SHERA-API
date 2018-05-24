@@ -11,14 +11,28 @@ package com.shera.sheraapi.util;
  */
 public class CustomErrorType {
 
-    private String errorMessage;
+    private String errorMessageEN = "";
+    private String errorMEssageTH = "";
 
-    public CustomErrorType(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public CustomErrorType(String errorMessageTH, String errorMEssageEN) {
+        this.errorMEssageTH = errorMessageTH;
+        this.errorMessageEN = errorMEssageEN;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getErrorMessageEN() {
+        return errorMessageEN;
+    }
+
+    public void setErrorMessageEN(String errorMessageEN) {
+        this.errorMessageEN = errorMessageEN;
+    }
+
+    public String getErrorMEssageTH() {
+        return errorMEssageTH;
+    }
+
+    public void setErrorMEssageTH(String errorMEssageTH) {
+        this.errorMEssageTH = errorMEssageTH;
     }
 
 }

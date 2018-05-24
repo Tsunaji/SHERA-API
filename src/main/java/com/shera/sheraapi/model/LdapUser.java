@@ -19,6 +19,7 @@ public class LdapUser {
     private String mail = "";
     private String title = "";
     private String distinguishedName = "";
+    private String lockoutTime = "";
 
     public static final org.slf4j.Logger logger = LoggerFactory.getLogger(LdapUser.class);
 
@@ -26,7 +27,7 @@ public class LdapUser {
 
     }
 
-    public LdapUser(String employeeID, String sAMAccountName, String displayName, String cn, String givenName, String sn, String description, String department, String mail, String title, String distinguishedName) {
+    public LdapUser(String employeeID, String sAMAccountName, String displayName, String cn, String givenName, String sn, String description, String department, String mail, String title, String distinguishedName, String lockoutTime) {
         this.employeeID = employeeID;
         this.sAMAccountName = sAMAccountName;
         this.displayName = displayName;
@@ -38,6 +39,7 @@ public class LdapUser {
         this.mail = mail;
         this.title = title;
         this.distinguishedName = distinguishedName;
+        this.lockoutTime = lockoutTime;
     }
 
     public LdapUser(SearchResult result) {
@@ -98,6 +100,11 @@ public class LdapUser {
             if (attrs.get("distinguishedName") != null) {
                 Attribute dnAttr = attrs.get("distinguishedName");
                 this.distinguishedName = (String) dnAttr.get();
+            }
+
+            if (attrs.get("lockoutTime") != null) {
+                Attribute lockoutTimeAttr = attrs.get("lockoutTime");
+                this.lockoutTime = (String) lockoutTimeAttr.get();
             }
 
         } catch (NamingException ex) {
@@ -195,12 +202,20 @@ public class LdapUser {
         this.distinguishedName = distinguishedName;
     }
 
+    public String getLockoutTime() {
+        return lockoutTime;
+    }
+
+    public void setLockoutTime(String lockoutTime) {
+        this.lockoutTime = lockoutTime;
+    }
+
     public String toString() {
         return "{employeeID = " + this.employeeID + ", sAMAccountName = " + this.sAMAccountName
                 + ", displayName = " + this.displayName + ", cn = " + this.cn
                 + ", givenName = " + this.givenName + ", sn = " + this.sn
                 + ", description = " + this.description + ", department = " + this.department
                 + ", mail = " + this.mail + ", title = " + this.title
-                + ", distinguishedName = " + this.distinguishedName + "}";
+                + ", distinguishedName = " + this.distinguishedName + ", lockoutTime = " + this.lockoutTime + "}";
     }
 }

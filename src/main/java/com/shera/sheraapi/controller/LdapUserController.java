@@ -34,14 +34,17 @@ public class LdapUserController {
 
     @RequestMapping(value = "/authen", method = RequestMethod.POST)
     public ResponseEntity<?> ldapAuthen(@RequestBody AuthenBody body) {
-        if (ldapUserService.ldapValidateLogin(body.getUsername(), body.getPassword()) && !body.getPassword().equals("")) {
-            logger.info("Username: " + body.getUsername() + " Password: " + body.getPassword());
-            LdapUser ldapUser = ldapUserService.getLdapUserByUsername(body.getUsername());
-            return new ResponseEntity<LdapUser>(ldapUser, HttpStatus.OK);
+        logger.info("Authen by: " + body.getUsername());
+        if (ldapUserService.checkLdapUserIsNotLocked(body.getUsername())) { //check user is not lock
+            if (ldapUserService.ldapValidateLogin(body.getUsername(), body.getPassword()) && body.getPassword() != "") { //check validate user
+                LdapUser ldapUser = ldapUserService.getLdapUserByUsername(body.getUsername());
+                return new ResponseEntity<LdapUser>(ldapUser, HttpStatus.OK);
+            }
+            return new ResponseEntity(new CustomErrorType("ชื่อผู้ใช้ หรือ รหัสผ่านไม่ถูกต้อง",
+                    "Username or password is invalid"), HttpStatus.UNAUTHORIZED);
         }
-        logger.error("User " + body.getUsername() + " or password invalid");
-        return new ResponseEntity(new CustomErrorType("User " + body.getUsername()
-                + " or password invalid"), HttpStatus.NOT_FOUND);
+        return new ResponseEntity(new CustomErrorType("ผู้ใช้ " + body.getUsername() + " ถูกล็อค",
+                "Username " + body.getUsername() + " is locked"), HttpStatus.LOCKED);
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.POST)

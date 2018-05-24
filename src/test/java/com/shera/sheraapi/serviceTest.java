@@ -5,9 +5,11 @@
  */
 package com.shera.sheraapi;
 
-import com.shera.sheraapi.model.LdapUser;
+import com.shera.sheraapi.service.LdapUserService;
 import com.shera.sheraapi.service.LdapUserServiceImpl;
 import org.junit.Test;
+import static org.junit.Assert.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -15,17 +17,21 @@ import org.junit.Test;
  */
 public class serviceTest {
 
+    @Autowired
+    LdapUserService ldapUserService;
+
+    @Test
+    public void ldapTest() {
+        ldapUserService = new LdapUserServiceImpl();
+//        System.out.println("checkLdapUserIsNotLocked: " + ldapUserService.checkLdapUserIsNotLocked("jirasak_ka"));
+//        System.out.println("ldapValidateLogin: " + ldapUserService.ldapValidateLogin("jirasak_ka", "Tsunaji230425352"));
+        System.out.println("getLdapUserByUsername: " + ldapUserService.getLdapUserByUsername("sheraadm").toString());
+    }
+    
 //    @Test
-//    public void ldapTest() {
-//        LdapUserServiceImpl impl = new LdapUserServiceImpl();
-//
-//        if (impl.ldapValidateLogin("jirasak_ka", "Tsunaji230425352")) {
-//            System.out.println("TEST VALIDATE SUCCESS !");
-//            LdapUser ldapUser = impl.getLdapUserByUsername("jirasak_ka");
-//            System.out.println("ldapUser Object: " + ldapUser.toString());
-//        } else {
-//            System.out.println("TEST VALIDATE FAIL !");
-//        }
+//    public void testPerformSomeTask() throws Exception {
+//        Log4J2PropertiesConf log4J2PropertiesConf = new Log4J2PropertiesConf();
+//        log4J2PropertiesConf.performSomeTask();
 //    }
 
 }
