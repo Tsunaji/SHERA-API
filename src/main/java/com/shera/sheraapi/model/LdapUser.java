@@ -4,7 +4,8 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LdapUser {
 
@@ -20,8 +21,9 @@ public class LdapUser {
     private String title = "";
     private String distinguishedName = "";
     private String lockoutTime = "";
+    private SearchResult result;
 
-    public static final org.slf4j.Logger logger = LoggerFactory.getLogger(LdapUser.class);
+    public static final Logger logger = LogManager.getLogger(LdapUser.class);
 
     public LdapUser() {
 
@@ -108,12 +110,16 @@ public class LdapUser {
             }
 
         } catch (NamingException ex) {
-            logger.error("Get LDAP attrubute Error !: " + ex.toString());
+            logger.error("Get LDAP object NamingException error!: " + ex.getMessage());
         } catch (NullPointerException ex) {
-            logger.error("Get LDAP attrubute null !: " + ex.toString());
+            logger.error("Get LDAP object NullPointerException error!: " + ex.getMessage());
         }
     }
 
+//    public LdapUser(SearchResult result) {
+//        this.result = result;
+//    }
+    
     public String getEmployeeID() {
         return employeeID;
     }

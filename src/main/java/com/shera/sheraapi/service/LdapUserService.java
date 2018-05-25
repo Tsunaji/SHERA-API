@@ -6,6 +6,7 @@
 package com.shera.sheraapi.service;
 
 import com.shera.sheraapi.model.LdapUser;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.DirContext;
@@ -17,13 +18,17 @@ import javax.naming.directory.SearchResult;
  */
 public interface LdapUserService {
 
-    void getLdapContext();
+    Hashtable<String, String> getLdapEnv();
 
-    SearchResult getLdapSearchResultByUsername(String username);
+    DirContext getLdapContext(Hashtable<String, String> env);
 
-    boolean checkLdapUserIsNotLocked(String username);
-    
+    NamingEnumeration<SearchResult> getLdapSearchResultByUsername(DirContext ctx, String username);
+
+    boolean checkLdapUserWasNotLocked(String username);
+
     boolean ldapValidateLogin(String username, String password);
-    
+
     LdapUser getLdapUserByUsername(String username);
+
+    ArrayList<LdapUser> getListLdapUserByUsername(String username);
 }
