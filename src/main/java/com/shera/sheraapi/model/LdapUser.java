@@ -21,7 +21,6 @@ public class LdapUser {
     private String title = "";
     private String distinguishedName = "";
     private String lockoutTime = "";
-    private SearchResult result;
 
     public static final Logger logger = LogManager.getLogger(LdapUser.class);
 
@@ -116,10 +115,6 @@ public class LdapUser {
         }
     }
 
-//    public LdapUser(SearchResult result) {
-//        this.result = result;
-//    }
-    
     public String getEmployeeID() {
         return employeeID;
     }
@@ -217,11 +212,11 @@ public class LdapUser {
     }
 
     public String toString() {
-        return "{employeeID = " + this.employeeID + ", sAMAccountName = " + this.sAMAccountName
-                + ", displayName = " + this.displayName + ", cn = " + this.cn
-                + ", givenName = " + this.givenName + ", sn = " + this.sn
-                + ", description = " + this.description + ", department = " + this.department
-                + ", mail = " + this.mail + ", title = " + this.title
-                + ", distinguishedName = " + this.distinguishedName + ", lockoutTime = " + this.lockoutTime + "}";
+        return "{employeeID = '" + this.employeeID + "', sAMAccountName = '" + this.sAMAccountName
+                + "', displayName = '" + this.displayName + "', cn = '" + this.cn
+                + "', givenName = '" + this.givenName + "', sn = '" + this.sn
+                + "', description = '" + this.description + "', department = '" + this.department
+                + "', mail = '" + this.mail + "', title = '" + this.title
+                + "', distinguishedName = '" + this.distinguishedName + "', lockoutTime = '" + this.lockoutTime + "'}";
     }
 }

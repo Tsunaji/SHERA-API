@@ -9,8 +9,8 @@
     </Properties>
     <Appenders>
         <!-- Rolling File Appender -->
-        <RollingFile name="FileAppender" fileName="${PC_BASE_PATH}/log4j2-demo.log" 
-                     filePattern="${PC_BASE_PATH}/log4j2-demo-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="FileAppender" fileName="${PC_BASE_PATH}/log4j2-sheraapi.log" 
+                     filePattern="${PC_BASE_PATH}/log4j2-sheraapi-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout>
                 <Pattern>${LOG_PATTERN}</Pattern>
             </PatternLayout>

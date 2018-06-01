@@ -72,7 +72,7 @@ public class LdapUserServiceImpl implements LdapUserService {
             NamingEnumeration<SearchResult> results;
             SearchControls controls = new SearchControls();
             controls.setSearchScope(SearchControls.SUBTREE_SCOPE); // Search Entire Subtree
-            controls.setCountLimit(10);   //Sets the maximum number of entries to be returned as a result of the search
+            controls.setCountLimit(1);   //Sets the maximum number of entries to be returned as a result of the search
             controls.setTimeLimit(5000); // Sets the time limit of these SearchControls in milliseconds
 
             String searchString = "(&(objectCategory=user)(sAMAccountName=" + username + "))";
@@ -112,6 +112,21 @@ public class LdapUserServiceImpl implements LdapUserService {
         } catch (NamingException e) {
             logger.error("Check locked user error!: " + e.getMessage(), e);
             return false;
+        } finally {
+            if (results != null) {
+                try {
+                    results.close();
+                } catch (Exception e) {
+                    logger.error("Close results error!: " + e.getMessage(), e);
+                }
+            }
+            if (ctx != null) {
+                try {
+                    ctx.close();
+                } catch (Exception e) {
+                    logger.error("Close context error!: " + e.getMessage(), e);
+                }
+            }
         }
     }
 
@@ -141,6 +156,21 @@ public class LdapUserServiceImpl implements LdapUserService {
         } catch (NamingException e) {
             logger.error("Validate login error!: " + e.getMessage());
             return false;
+        } finally {
+            if (results != null) {
+                try {
+                    results.close();
+                } catch (Exception e) {
+                    logger.error("Close results error!: " + e.getMessage(), e);
+                }
+            }
+            if (ctx != null) {
+                try {
+                    ctx.close();
+                } catch (Exception e) {
+                    logger.error("Close context error!: " + e.getMessage(), e);
+                }
+            }
         }
     }
 
@@ -162,6 +192,21 @@ public class LdapUserServiceImpl implements LdapUserService {
         } catch (NamingException e) {
             logger.error("Get LDAP user error!: " + e.getMessage(), e);
             return null;
+        } finally {
+            if (results != null) {
+                try {
+                    results.close();
+                } catch (Exception e) {
+                    logger.error("Close results error!: " + e.getMessage(), e);
+                }
+            }
+            if (ctx != null) {
+                try {
+                    ctx.close();
+                } catch (Exception e) {
+                    logger.error("Close context error!: " + e.getMessage(), e);
+                }
+            }
         }
     }
 
@@ -171,7 +216,6 @@ public class LdapUserServiceImpl implements LdapUserService {
         DirContext ctx = getLdapContext(env);
         NamingEnumeration<SearchResult> results = getLdapSearchResultByUsername(ctx, username);
         ArrayList<LdapUser> ldapUsers = new ArrayList<>();
-        int i = 0;
         try {
             while (results.hasMore()) {
                 SearchResult result = (SearchResult) results.next();
@@ -179,16 +223,26 @@ public class LdapUserServiceImpl implements LdapUserService {
                 LdapUser ldapUser = new LdapUser(result);
 
                 ldapUsers.add(ldapUser);
-
-                i++;
             }
-
-//        LdapUser ldapUser = new LdapUser(result);
-//        ldapUsers.add(ldapUser);
             return ldapUsers;
         } catch (NamingException e) {
             logger.error("Get LDAP user error!: " + e.getMessage(), e);
             return null;
+        } finally {
+            if (results != null) {
+                try {
+                    results.close();
+                } catch (Exception e) {
+                    logger.error("Close results error!: " + e.getMessage(), e);
+                }
+            }
+            if (ctx != null) {
+                try {
+                    ctx.close();
+                } catch (Exception e) {
+                    logger.error("Close context error!: " + e.getMessage(), e);
+                }
+            }
         }
     }
 }
