@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>sheraapi</name>
-    <description>Shera API</description>
+    <description>SHERA API</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.shera.sheraapi.service;
 
 import com.shera.sheraapi.model.LdapUser;
@@ -21,16 +16,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author jirasak_ka
- */
 @Service("ldapUserService")
 public class LdapUserServiceImpl implements LdapUserService {
 
     private static final String LDAP_SERVER = "10.61.10.27";
     private static final String LDAP_SERVER_PORT = "389";
-//    private static final String LDAP_SERVER_PORT = "3268";
     private static final String LDAP_BASE_DN = "dc=mahaphant,dc=com";
     private static final String LDAP_BIND_DN = "cn=sheraadm, cn=Users, dc=mahaphant, dc=com";
     private static final String LDAP_BIND_PASSWORD = "mhp@root1";
@@ -58,11 +48,10 @@ public class LdapUserServiceImpl implements LdapUserService {
         DirContext ctx;
         try {
             ctx = new InitialDirContext(env);
-            logger.info("Create context success!");
             return ctx;
         } catch (NamingException e) {
-            logger.error("Create context error!: " + e.getMessage());
-            return null;
+            logger.error("Create context error!", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -74,16 +63,12 @@ public class LdapUserServiceImpl implements LdapUserService {
             controls.setSearchScope(SearchControls.SUBTREE_SCOPE); // Search Entire Subtree
             controls.setCountLimit(1);   //Sets the maximum number of entries to be returned as a result of the search
             controls.setTimeLimit(5000); // Sets the time limit of these SearchControls in milliseconds
-
             String searchString = "(&(objectCategory=user)(sAMAccountName=" + username + "))";
-
             results = ctx.search("", searchString, controls);
-
-            logger.info("Get LDAP search results success!");
             return results;
         } catch (NamingException e) {
-            logger.error("Get LDAP search results error!: ", e.getMessage());
-            return null;
+            logger.error("LDAP search results error!", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -99,10 +84,8 @@ public class LdapUserServiceImpl implements LdapUserService {
                 Attribute lockoutTimeAttr = attrs.get("lockoutTime");
                 String lockoutTime = (String) lockoutTimeAttr.get();
                 if (lockoutTime.equals("0")) {
-                    logger.debug("lockoutTime = " + lockoutTime + ", User: " + username + " was not locked!");
                     return true;
                 } else {
-                    logger.debug("lockoutTime = " + lockoutTime + ", User: " + username + " was locked!");
                     return false;
                 }
             } else {
@@ -110,21 +93,21 @@ public class LdapUserServiceImpl implements LdapUserService {
                 return false;
             }
         } catch (NamingException e) {
-            logger.error("Check locked user error!: " + e.getMessage(), e);
+            logger.error(e);
             return false;
         } finally {
             if (results != null) {
                 try {
                     results.close();
                 } catch (Exception e) {
-                    logger.error("Close results error!: " + e.getMessage(), e);
+                    logger.error(e);
                 }
             }
             if (ctx != null) {
                 try {
                     ctx.close();
                 } catch (Exception e) {
-                    logger.error("Close context error!: " + e.getMessage(), e);
+                    logger.error(e);
                 }
             }
         }
@@ -154,21 +137,21 @@ public class LdapUserServiceImpl implements LdapUserService {
                 return false;
             }
         } catch (NamingException e) {
-            logger.error("Validate login error!: " + e.getMessage());
+            logger.error(e);
             return false;
         } finally {
             if (results != null) {
                 try {
                     results.close();
                 } catch (Exception e) {
-                    logger.error("Close results error!: " + e.getMessage(), e);
+                    logger.error(e);
                 }
             }
             if (ctx != null) {
                 try {
                     ctx.close();
                 } catch (Exception e) {
-                    logger.error("Close context error!: " + e.getMessage(), e);
+                    logger.error(e);
                 }
             }
         }
@@ -187,24 +170,24 @@ public class LdapUserServiceImpl implements LdapUserService {
                 return ldapUser;
             } else {
                 logger.info("Ldap results no data!");
-                return null;
+                return ldapUser;
             }
         } catch (NamingException e) {
-            logger.error("Get LDAP user error!: " + e.getMessage(), e);
-            return null;
+            logger.error(e);
+            throw new RuntimeException(e);
         } finally {
             if (results != null) {
                 try {
                     results.close();
                 } catch (Exception e) {
-                    logger.error("Close results error!: " + e.getMessage(), e);
+                    logger.error(e);
                 }
             }
             if (ctx != null) {
                 try {
                     ctx.close();
                 } catch (Exception e) {
-                    logger.error("Close context error!: " + e.getMessage(), e);
+                    logger.error(e);
                 }
             }
         }
@@ -226,21 +209,21 @@ public class LdapUserServiceImpl implements LdapUserService {
             }
             return ldapUsers;
         } catch (NamingException e) {
-            logger.error("Get LDAP user error!: " + e.getMessage(), e);
-            return null;
+            logger.error(e);
+            throw new RuntimeException(e);
         } finally {
             if (results != null) {
                 try {
                     results.close();
                 } catch (Exception e) {
-                    logger.error("Close results error!: " + e.getMessage(), e);
+                    logger.error(e);
                 }
             }
             if (ctx != null) {
                 try {
                     ctx.close();
                 } catch (Exception e) {
-                    logger.error("Close context error!: " + e.getMessage(), e);
+                    logger.error(e);
                 }
             }
         }

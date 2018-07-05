@@ -211,12 +211,9 @@ public class LdapUser {
         this.lockoutTime = lockoutTime;
     }
 
+    @Override
     public String toString() {
-        return "{employeeID = '" + this.employeeID + "', sAMAccountName = '" + this.sAMAccountName
-                + "', displayName = '" + this.displayName + "', cn = '" + this.cn
-                + "', givenName = '" + this.givenName + "', sn = '" + this.sn
-                + "', description = '" + this.description + "', department = '" + this.department
-                + "', mail = '" + this.mail + "', title = '" + this.title
-                + "', distinguishedName = '" + this.distinguishedName + "', lockoutTime = '" + this.lockoutTime + "'}";
+        return "LdapUser{" + "employeeID=" + employeeID + ", sAMAccountName=" + sAMAccountName + ", displayName=" + displayName + ", cn=" + cn + ", givenName=" + givenName + ", sn=" + sn + ", description=" + description + ", department=" + department + ", mail=" + mail + ", title=" + title + ", distinguishedName=" + distinguishedName + ", lockoutTime=" + lockoutTime + '}';
     }
+    
 }
