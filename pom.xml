@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.shera</groupId>
-    <artifactId>sheraapi</artifactId>
+    <artifactId>SHERA-API</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>sheraapi</name>
+    <name>SHERA-API</name>
     <description>SHERA API</description>
 
     <parent>
